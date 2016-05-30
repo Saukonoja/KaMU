@@ -12,7 +12,6 @@ public class KaMU {
         System.out.println("1. Water level");
         System.out.println("2. Water flow");
         System.out.println("3. Exit");
-        while(sw != 3){
             
         try{
   
@@ -35,5 +34,5 @@ public class KaMU {
              System.out.println(e.getMessage());
         }
        }
-    }  
+    
 }

@@ -17,6 +17,7 @@ public class led {
         }
         public void ledon(){
             pin.setShutdownOptions(true, PinState.LOW);
+            pin.toggle();
         }
         public void ledtoggle(){
             try {
