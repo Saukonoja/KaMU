@@ -1,38 +1,29 @@
 package kamu;
 
+import java.net.InetAddress;
 import java.util.Scanner;
 
 public class KaMU {
     
-    public static void main(String[] args) throws InterruptedException {
-        int sw = 0;
-        //BufferedReader bufferRead = new BufferedReader(new InputStreamReader(System.in));
-        
-        Scanner in = new Scanner(System.in); 
-        System.out.println("1. Water level");
-        System.out.println("2. Water flow");
-        System.out.println("3. Exit");
-            
-        try{
-  
-        sw = in.nextInt();
-        
-        switch (sw){
-            case 1:
-                logSender sender = new logSender();
-                sender.sendLog();
-                   break;
-            case 2:
-                System.out.println("You selected 2");
-                break;
-            case 3: 
-                System.exit(0); 
-                break;
-        }
-        
-        }catch (Exception e){
-             System.out.println(e.getMessage());
-        }
-       }
+    static boolean conn;
     
+    public static void main(String[] args) {
+        
+        while (!conn){
+            try{
+                conn = InetAddress.getByName("192.168.142.38").isReachable(1000);
+            }catch (Exception e){
+                conn = false;
+                System.out.println("Connection to Kaa server failed");
+            }
+            if (conn) {
+                KaaController controller = new KaaController();
+                controller.start();
+            }else {
+               //led.ledtoggle();
+            }       
+        }
+        
+        
+    }  
 }
