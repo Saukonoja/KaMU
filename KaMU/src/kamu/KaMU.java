@@ -1,38 +1,34 @@
 package kamu;
 
+import java.net.InetAddress;
 import java.util.Scanner;
+import static org.kaaproject.kaa.client.channel.impl.channels.DefaultBootstrapChannel.LOG;
 
 public class KaMU {
-    
+    static boolean conn;
     public static void main(String[] args) throws InterruptedException {
-        int sw = 0;
-        //BufferedReader bufferRead = new BufferedReader(new InputStreamReader(System.in));
         
-        Scanner in = new Scanner(System.in); 
-        System.out.println("1. Water level");
-        System.out.println("2. Water flow");
-        System.out.println("3. Exit");
-            
-        try{
-  
-        sw = in.nextInt();
+        KaaController controller = new KaaController("KaaController");
         
-        switch (sw){
-            case 1:
-                logSender sender = new logSender();
-                sender.sendLog();
-                   break;
-            case 2:
-                System.out.println("You selected 2");
-                break;
-            case 3: 
-                System.exit(0); 
-                break;
+        
+        while (true){
+             if (conn) {
+                Led.ledtoggle(0);
+                controller.start();
+                    
+                }
+            try{
+                conn = InetAddress.getByName("192.168.142.46").isReachable(1000);
+                 } catch (Exception e){
+                    Led.ledtoggle(500);
+                    LOG.info("Connection to Kaa server failed: " + e.getMessage());
+                    
+                }
+               
+           
+            Thread.sleep(10000);
         }
         
-        }catch (Exception e){
-             System.out.println(e.getMessage());
-        }
        }
     
 }

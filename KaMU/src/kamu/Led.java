@@ -8,27 +8,26 @@ import com.pi4j.io.gpio.GpioPinDigitalOutput;
 import com.pi4j.io.gpio.PinState;
 import com.pi4j.io.gpio.RaspiPin;
 
-public class led {
+public class Led {
     static final GpioController gpio = GpioFactory.getInstance();
-    static final GpioPinDigitalOutput pin = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_01, "MyLED", PinState.LOW);
+    static final GpioPinDigitalOutput pin = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_01, "MyLED", PinState.HIGH);
     
-        public void ledoff() {
+        public static void ledoff() {
             gpio.shutdown();
         }
-        public void ledon(){
-            pin.setShutdownOptions(true, PinState.LOW);
-            pin.toggle();
+        public static void ledon(){           
+            pin.high();
         }
-        public void ledtoggle(){
+        
+
+        
+        public static void ledtoggle(long interval){
             try {
-            pin.toggle();
-            Thread.sleep(500);
-            pin.toggle();
+                pin.blink(interval);
             }catch (Exception e){
                 System.out.println(e.getMessage());
             }     
         }
-       
-     
+  
 }
   
